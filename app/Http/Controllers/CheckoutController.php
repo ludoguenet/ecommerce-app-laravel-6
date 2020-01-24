@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
-use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
-use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Arr;
 
 class CheckoutController extends Controller
 {
@@ -17,28 +17,28 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        Stripe::setApiKey('sk_test_GEQCwhRyT9PcK1vju3YcsIEN00gXSsjo1P');
+        Stripe::setApiKey('sk_test_dBWWV4fxKl15cCOp7HdwQB4M00xTXyD2K2');
 
         $intent = PaymentIntent::create([
             'amount' => round(Cart::total()),
             'currency' => 'eur',
         ]);
 
+        $clientSecret = Arr::get($intent, 'client_secret');
+
         return view('checkout.index', [
-            'client_secret' => Arr::get($intent, 'client_secret')
+            'clientSecret' => $clientSecret
         ]);
     }
 
     /**
-     * Charge the client.
+     * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function charge(Request $request)
+    public function create()
     {
-        $data = $request->json()->all();
-
-        return $data['paymentIntent']['amount'];
+        //
     }
 
     /**
