@@ -1,9 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="col-md-12">
-    <h1>Mon panier</h1>
-</div>
 @if (Cart::count() > 0)
 <div class="px-4 px-lg-0">
     <div class="pb-5">
@@ -86,7 +83,7 @@
                         <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong>
                             <h5 class="font-weight-bold">{{ getPrice(Cart::total()) }}</h5>
                         </li>
-                        </ul><a href="{{ route('checkout.index') }}" class="btn btn-dark rounded-pill py-2 btn-block">Passer à la caisse</a>
+                        </ul><a href="{{ route('checkout.index') }}" class="btn btn-dark rounded-pill py-2 btn-block"><i class="fa fa-credit-card" aria-hidden="true"></i> Passer à la caisse</a>
                     </div>
                     </div>
             </div>
@@ -95,7 +92,7 @@
 </div>
 @else
     <div class="col-md-12">
-        <p>Votre panier est vide.</p>
+        <div class="alert alert-info">Votre panier est vide.</div>
     </div>
 @endif
 @endsection

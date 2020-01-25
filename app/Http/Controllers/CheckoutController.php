@@ -17,11 +17,15 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        Stripe::setApiKey('sk_test_dBWWV4fxKl15cCOp7HdwQB4M00xTXyD2K2');
+        if (Cart::count() <= 0) {
+            return redirect()->route('products.index');
+        }
+
+        Stripe::setApiKey('sk_test_3WteeitM6Wi4AK3SdJzBrm7300qGrAamxX');
 
         $intent = PaymentIntent::create([
             'amount' => round(Cart::total()),
-            'currency' => 'eur',
+            'currency' => 'eur'
         ]);
 
         $clientSecret = Arr::get($intent, 'client_secret');
@@ -49,7 +53,11 @@ class CheckoutController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Cart::destroy();
+
+        $data = $request->json()->all();
+
+        return $data['paymentIntent'];
     }
 
     /**
