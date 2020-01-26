@@ -10,10 +10,10 @@
 
 @section('content')
 <div class="col-md-12">
-    <a href="{{ route('cart.index') }}" class="btn btn-sm btn-secondary mt-3"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Retour</a>
+    <a href="{{ route('cart.index') }}" class="btn btn-sm btn-secondary mt-3">Revenir au panier</a>
     <div class="row">
         <div class="col-md-6 mx-auto">
-            <h4 class="pt-5">Total: <span class="text-info">{{ getPrice(Cart::total()) }}</span></h4>
+            <h4 class="text-center pt-5">Procéder au paiement</h4>
             <form action="{{ route('checkout.store') }}" method="POST" class="my-4" id="payment-form">
                 @csrf
                 <div id="card-element">
@@ -24,7 +24,7 @@
                 <div id="card-errors" role="alert"></div>
 
                 <button class="btn btn-success btn-block mt-3" id="submit">
-                    <i class="fa fa-credit-card" aria-hidden="true"></i> Payer maintenant
+                    <i class="fa fa-credit-card" aria-hidden="true"></i> Payer maintenant ({{ getPrice(Cart::total()) }})
                 </button>
             </form>
         </div>
@@ -71,16 +71,9 @@
 
     var submitButton = document.getElementById('submit');
 
-    function resetButton()
-    {
-        submitButton.disabled = false;
-        submitButton.innerHTML = "<i class='fa fa-credit-card' aria-hidden='true'></i> Payer maintenant";
-    }
-
     submitButton.addEventListener('click', function(ev) {
     ev.preventDefault();
     submitButton.disabled = true;
-    submitButton.innerHTML = "⌛ Merci de patienter...";
     stripe.confirmCardPayment("{{ $clientSecret }}", {
         payment_method: {
             card: card
@@ -88,7 +81,7 @@
         }).then(function(result) {
             if (result.error) {
             // Show error to your customer (e.g., insufficient funds)
-            resetButton()
+            submitButton.disabled = false;
             console.log(result.error.message);
             } else {
                 // The payment has been processed!
@@ -117,7 +110,6 @@
                             form.reset();
                             window.location.href = redirect;
                     }).catch((error) => {
-                        resetButton()
                         console.log(error)
                     })
                 }
