@@ -12,7 +12,7 @@
         <form action="{{ route('cart.store') }}" method="POST">
           @csrf
           <input type="hidden" name="product_id" value="{{ $product->id }}">
-          <button type="submit" class="btn btn-success"><i class="fa fa-shopping-basket" aria-hidden="true"></i> Ajouter ce produit au panier</button>
+          <button type="submit" class="btn btn-success"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Ajouter au panier</button>
         </form>
       </div>
       <div class="col-auto d-none d-lg-block">
