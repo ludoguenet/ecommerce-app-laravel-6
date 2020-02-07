@@ -1,7 +1,6 @@
 <?php
 
 use App\Category;
-use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class CategoriesTableSeeder extends Seeder
@@ -13,36 +12,29 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        $created_at = (Carbon::now())->toDateTimeString();
-
         Category::create([
-            'name' => 'High-Tech',
-            'slug' => 'high-tech',
-            'created_at' => $created_at
-        ]);
-
-        Category::create([
-            'name' => 'Mode',
-            'slug' => 'mode',
-            'created_at' => $created_at
-        ]);
-
-        Category::create([
-            'name' => 'Épiceries',
-            'slug' => 'epiceries',
-            'created_at' => $created_at
+            'name' => 'High Tech',
+            'slug' => 'high-tech'
         ]);
 
         Category::create([
             'name' => 'Livres',
-            'slug' => 'livres',
-            'created_at' => $created_at
+            'slug' => 'livres'
+        ]);
+
+        Category::create([
+            'name' => 'Meubles',
+            'slug' => 'meubles'
         ]);
 
         Category::create([
             'name' => 'Jeux',
-            'slug' => 'jeux',
-            'created_at' => $created_at
+            'slug' => 'jeux'
+        ]);
+
+        Category::create([
+            'name' => 'Nourriture',
+            'slug' => 'nourriture'
         ]);
     }
 }

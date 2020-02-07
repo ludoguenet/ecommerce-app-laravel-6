@@ -4,7 +4,11 @@
   <div class="col-md-12">
     <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
       <div class="col p-3 d-flex flex-column position-static">
-        <strong class="d-inline-block mb-2 text-success">Catégorie 1</strong>
+        <strong class="d-inline-block mb-2 text-success">
+          @foreach ($product->categories as $category)
+              {{ $category->name }}{{ $loop->last ? '' : ', '}}
+          @endforeach
+        </strong>
         <h5 class="mb-0">{{ $product->title }}</h5>
         <hr>
         <p class="mb-auto text-muted">{{ $product->description }}</p>

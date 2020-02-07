@@ -15,8 +15,6 @@ class ProductsTableSeeder extends Seeder
         $faker = Faker\Factory::create();
 
         for ($i=0; $i < 30; $i++) {
-            $categoryIds = [1, 2, 3, 4, 5];
-
             Product::create([
                 'title' => $faker->sentence(4),
                 'slug' => $faker->slug,
@@ -25,8 +23,8 @@ class ProductsTableSeeder extends Seeder
                 'price' => $faker->numberBetween(15, 300) * 100,
                 'image' => 'https://via.placeholder.com/200x250'
             ])->categories()->attach([
-                $categoryIds[array_rand($categoryIds)],
-                $categoryIds[array_rand($categoryIds)]
+                rand(1, 4),
+                rand(1, 4)
             ]);
         }
     }
