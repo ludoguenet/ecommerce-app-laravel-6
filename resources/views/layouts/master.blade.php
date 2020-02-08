@@ -17,9 +17,6 @@
 
     <!-- Ecommerce App CSS -->
     <link rel="stylesheet" href="{{ asset('css/ecommerce.css') }}">
-
-    <!-- Custom styles for this template -->
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
   </head>
 
   <body>
@@ -31,7 +28,7 @@
           <a class="text-muted" href="{{ route('cart.index') }}">Panier <span class="badge badge-pill badge-info text-white">{{ Cart::count() }}</span></a>
         </div>
         <div class="col-4 text-center">
-          <a class="blog-header-logo text-dark" href="{{ route('products.index') }}">🛍️ E-Commerce</a>
+          <a class="blog-header-logo" style="color: #17a2b8 !important;" href="{{ route('products.index') }}">🛍️ LaraShop</a>
         </div>
         <div class="col-4 d-flex justify-content-end align-items-center">
           <a class="text-muted" href="#" aria-label="Search">
