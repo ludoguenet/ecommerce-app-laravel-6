@@ -4,7 +4,7 @@
   @foreach ($products as $product)
     <div class="col-md-6">
       <div class="row no-gutters border rounded d-flex align-items-center flex-md-row mb-4 shadow-sm position-relative">
-        <div class="col p-4 d-flex flex-column position-static">
+        <div class="col p-3 d-flex flex-column position-static">
           <small class="d-inline-block text-info mb-2">
             @foreach ($product->categories as $category)
                 {{ $category->name }}{{ $loop->last ? '' : ', '}}

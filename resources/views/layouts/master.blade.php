@@ -8,6 +8,10 @@
     @yield('extra-meta')
 
     <title>Laravel 6 E-Commerce</title>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
     @yield('extra-script')
 
     <!-- Bootstrap 4 -->
@@ -22,17 +26,17 @@
   <body>
 
   <div class="container">
-    <header class="blog-header py-3">
+    <header class="blog-header pt-3">
       <div class="row flex-nowrap justify-content-between align-items-center">
         <div class="col-4 pt-1">
           <a class="text-muted" href="{{ route('cart.index') }}">Panier <span class="badge badge-pill badge-info text-white">{{ Cart::count() }}</span></a>
         </div>
         <div class="col-4 text-center">
-          <a class="blog-header-logo" style="color: #17a2b8 !important;" href="{{ route('products.index') }}">🛍️ LaraShop</a>
+          <a class="blog-header-logo" style="color: #17a2b8 !important;" href="{{ route('products.index') }}"><img src="{{ asset('img/logo.png') }}" width="200" alt=""></a>
         </div>
         <div class="col-4 d-flex justify-content-end align-items-center">
           @include('partials.search')
-          <a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>
+          @include('partials.auth')
         </div>
       </div>
     </header>

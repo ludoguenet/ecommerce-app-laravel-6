@@ -2,6 +2,14 @@ a:hover {
 	text-decoration: none;
 }
 
+li {
+	list-style: none;
+}
+
+.nav-link {
+	color: #999;
+}
+
 .StripeElement
 {
 	box-sizing: border-box;
@@ -54,6 +62,7 @@ a:hover {
 {
 	line-height: 1;
 	border-bottom: 1px solid #e5e5e5;
+	padding-bottom: 1em;
 }
 
 .blog-header-logo
