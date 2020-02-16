@@ -90,7 +90,6 @@
                     var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                     var form = document.getElementById('payment-form');
                     var url = form.action;
-                    var redirect = '/merci';
 
                     fetch(
                         url,
@@ -107,10 +106,15 @@
                             })
                         }).then((data) => {
                             console.log(data);
+                            if (data.status === 400) {
+                                redirect = '/boutique';
+                            } else {
+                                redirect = '/merci';
+                            }
                             form.reset();
                             window.location.href = redirect;
                     }).catch((error) => {
-                        console.log(error)
+                        console.log(error);
                     })
                 }
             }
