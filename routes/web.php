@@ -26,6 +26,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/panier/ajouter', 'CartController@store')->name('cart.store');
     Route::patch('/panier/{rowId}', 'CartController@update')->name('cart.update');
     Route::delete('/panier/{rowId}', 'CartController@destroy')->name('cart.destroy');
+    Route::post('/coupon', 'CartController@storeCoupon')->name('cart.store.coupon');
+    Route::delete('/coupon', 'CartController@destroyCoupon')->name('cart.destroy.coupon');
 });
 
 /* Checkout Routes */

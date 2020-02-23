@@ -24,7 +24,7 @@
                 <div id="card-errors" role="alert"></div>
 
                 <button class="btn btn-success btn-block mt-3" id="submit">
-                    <i class="fa fa-credit-card" aria-hidden="true"></i> Payer maintenant ({{ getPrice(Cart::total()) }})
+                    <i class="fa fa-credit-card" aria-hidden="true"></i> Payer maintenant ({{ getPrice($total) }})
                 </button>
             </form>
         </div>
@@ -39,7 +39,7 @@
     document.getElementsByClassName('nav-scroller')[0].classList.add("d-none");
 
     // Paiement Stripe
-    var stripe = Stripe('pk_test_7SgrmpMGeJlIACKBTE2YbTXF00Q3876Bck');
+    var stripe = Stripe('pk_test_eXEITGgtCWbOx6HLwpRquVhV00TC3cxvpI');
     var elements = stripe.elements();
     var style = {
         base: {
@@ -105,16 +105,16 @@
                                 paymentIntent: paymentIntent
                             })
                         }).then((data) => {
-                            console.log(data);
                             if (data.status === 400) {
-                                redirect = '/boutique';
+                                var redirect = '/boutique';
                             } else {
-                                redirect = '/merci';
+                                var redirect = '/merci';
                             }
-                            form.reset();
+                            // console.log(data);
+                            // form.reset();
                             window.location.href = redirect;
                     }).catch((error) => {
-                        console.log(error);
+                        console.log(error)
                     })
                 }
             }

@@ -24,7 +24,7 @@
   </head>
 
   <body>
-
+<div>
   <div class="container">
     <header class="blog-header pt-3">
       <div class="row flex-nowrap justify-content-between align-items-center">
@@ -205,7 +205,7 @@
     <a href="#">Revenir en haut</a>
   </p>
 </footer>
-
+</div>
 @yield('extra-js')
 </body>
 </html>

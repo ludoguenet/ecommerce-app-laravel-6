@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddStockToProductsTable extends Migration
+class AddStockColumnToProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -25,6 +25,8 @@ class AddStockToProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::table('products', function (Blueprint $table) {
+            //
+        });
     }
 }

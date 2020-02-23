@@ -73,13 +73,20 @@
                     <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Code coupon
                     </div>
                     <div class="p-4">
+                        @if (!session()->has('coupon'))
                         <p class="font-italic mb-4">Si vous détenez un code Coupon, entrez-le dans le champ ci-dessous</p>
+                        <form action="{{ route('cart.store.coupon') }}" method="POST">
+                        @csrf
                         <div class="input-group mb-4 border rounded-pill p-2">
-                            <input type="text" placeholder="ABC-123" aria-describedby="button-addon3" class="form-control border-0">
+                            <input type="text" placeholder="ABC-123" name="code" aria-describedby="button-addon3" class="form-control border-0">
                             <div class="input-group-append border-0">
-                                <button id="button-addon3" type="button" class="btn btn-dark px-4 rounded-pill"><i class="fa fa-gift mr-2"></i>Appliquer le coupon</button>
+                            <button id="button-addon3" type="submit" class="btn btn-dark px-4 rounded-pill"><i class="fa fa-gift mr-2"></i>Appliquer le coupon</button>
                             </div>
                         </div>
+                        </form>
+                        @else
+                        <p class="font-italic mb-4">Coupon déjà appliqué.</p>
+                        @endif
                     </div>
                     <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Instructions pour le vendeur</div>
                     <div class="p-4">
@@ -93,12 +100,36 @@
                     <div class="p-4">
                         <p class="font-italic mb-4">Les frais éventuels de livraison seront calculés suivant les informations que vous avez transmises.</p>
                         <ul class="list-unstyled mb-4">
-                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Sous-total </strong><strong>{{ getPrice(Cart::subtotal()) }}</strong></li>
-                        {{-- <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Shipping and handling</strong><strong>$10.00</strong></li> --}}
+                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Sous-total </strong>
+                            <strong>{{ getPrice(Cart::subtotal()) }}</strong>
+                        </li>
+                        @if (session()->has('coupon'))
+                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Coupon {{ session()->get('coupon')['code'] }}
+                        <form action="{{ route('cart.destroy.coupon') }}" method="POST" class="d-inline-block">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-outline-danger d-inline-block"><i class="fa fa-trash"></i></button>
+                        </form>
+                        </strong>
+                        <strong>{{ getPrice(session()->get('coupon')['remise']) }}</strong>
+                        </li>
+                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Nouveau Sous-total</strong>
+                        <strong>
+                            {{ getPrice(Cart::subtotal() - session()->get('coupon')['remise']) }}
+                        </strong>
+                        </li>
+                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Taxe</strong><strong>{{ getPrice((Cart::subtotal() - session()->get('coupon')['remise']) * 0.20) }}</strong></li>
+                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong>
+                        <h5 class="font-weight-bold">
+                            {{ getPrice((Cart::subtotal() - session()->get('coupon')['remise']) + ((Cart::subtotal() - session()->get('coupon')['remise']) * 0.20 ))}}
+                        </h5>
+                        </li>
+                        @else
                         <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Taxe</strong><strong>{{ getPrice(Cart::tax()) }}</strong></li>
                         <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong>
                             <h5 class="font-weight-bold">{{ getPrice(Cart::total()) }}</h5>
                         </li>
+                        @endif
                         </ul><a href="{{ route('checkout.index') }}" class="btn btn-dark rounded-pill py-2 btn-block"><i class="fa fa-credit-card" aria-hidden="true"></i> Passer à la caisse</a>
                     </div>
                 </div>

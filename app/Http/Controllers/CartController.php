@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Coupon;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -54,26 +55,29 @@ class CartController extends Controller
         return redirect()->route('products.index')->with('success', 'Le produit a bien été ajouté.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function storeCoupon(Request $request)
     {
-        //
+        $coupon = Coupon::where('code', $request->get('code'))->first();
+
+        if (!$coupon) {
+            return redirect()->back()->with('error', 'Coupon invalide.');
+        }
+
+        $request->session()->put('coupon', [
+            'code' => $coupon->code,
+            'remise' => $coupon->discount(Cart::subtotal())
+        ]);
+
+        return redirect()->back()->with('success', 'Coupon appliqué :)');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function destroyCoupon()
     {
-        //
+        if (request()->session()->has('coupon')) {
+            request()->session()->forget('coupon');
+        }
+
+        return redirect()->back()->with('success', 'Coupon supprimé.');
     }
 
     /**
@@ -97,8 +101,8 @@ class CartController extends Controller
         }
 
         if ($data['qty'] > $data['stock']) {
-            Session::flash('error', 'Il n\'y a plus assez de stock.');
-            return response()->json(['error' => 'Not Enought Product Quantity']);
+            Session::flash('error', 'La quantité de ce produit n\'est pas disponible.');
+            return response()->json(['error' => 'Product Quantity Not Available']);
         }
 
         Cart::update($rowId, $data['qty']);
