@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Product;
 use App\Coupon;
+use App\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -57,10 +57,12 @@ class CartController extends Controller
 
     public function storeCoupon(Request $request)
     {
-        $coupon = Coupon::where('code', $request->get('code'))->first();
+        $code = $request->get('code');
+
+        $coupon = Coupon::where('code', $code)->first();
 
         if (!$coupon) {
-            return redirect()->back()->with('error', 'Coupon invalide.');
+            return redirect()->back()->with('error', 'Le coupon est invalide.');
         }
 
         $request->session()->put('coupon', [
@@ -68,16 +70,29 @@ class CartController extends Controller
             'remise' => $coupon->discount(Cart::subtotal())
         ]);
 
-        return redirect()->back()->with('success', 'Coupon appliqué :)');
+        return redirect()->back()->with('success', 'Le coupon est appliqué.');
     }
 
-    public function destroyCoupon()
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-        if (request()->session()->has('coupon')) {
-            request()->session()->forget('coupon');
-        }
+        //
+    }
 
-        return redirect()->back()->with('success', 'Coupon supprimé.');
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
     }
 
     /**
@@ -122,5 +137,12 @@ class CartController extends Controller
         Cart::remove($rowId);
 
         return back()->with('success', 'Le produit a été supprimé.');
+    }
+
+    public function destroyCoupon()
+    {
+        request()->session()->forget('coupon');
+
+        return redirect()->back()->with('success', 'Le coupon a été retiré.');
     }
 }

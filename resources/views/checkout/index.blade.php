@@ -39,7 +39,7 @@
     document.getElementsByClassName('nav-scroller')[0].classList.add("d-none");
 
     // Paiement Stripe
-    var stripe = Stripe('pk_test_eXEITGgtCWbOx6HLwpRquVhV00TC3cxvpI');
+    var stripe = Stripe('pk_test_Bcx25YZRqe73EcUXVtThZO5G00OJ5pn0oZ');
     var elements = stripe.elements();
     var style = {
         base: {

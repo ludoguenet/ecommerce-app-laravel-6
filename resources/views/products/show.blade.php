@@ -4,12 +4,12 @@
   <div class="col-md-12">
     <div class="row no-gutters p-3 border rounded d-flex align-items-center flex-md-row mb-4 shadow-sm position-relative">
       <div class="col p-3 d-flex flex-column position-static">
-        <div class="d-inline-block mb-2 text-info">
+        <muted class="d-inline-block mb-2 text-info">
           <div class="badge badge-pill badge-info">{{ $stock }}</div>
           @foreach ($product->categories as $category)
               {{ $category->name }}{{ $loop->last ? '' : ', '}}
           @endforeach
-        </div>
+        </muted>
         <h3 class="mb-4">{{ $product->title }}</h3>
         <span>{!! $product->description !!}</span>
         <strong class="mb-4 display-4 text-secondary">{{ $product->getPrice() }}</strong>

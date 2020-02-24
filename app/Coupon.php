@@ -8,6 +8,6 @@ class Coupon extends Model
 {
     public function discount($subtotal)
     {
-        return (($this->percent_off / 100) * $subtotal);
+        return ($subtotal * ($this->percent_off / 100));
     }
 }

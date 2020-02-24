@@ -27,15 +27,16 @@ class CartUpdatedListener
      */
     public function handle($event)
     {
-        if (request()->session()->has('coupon')) {
-            $code = request()->session()->get('coupon')['code'];
+        $code = request()->session()->get('coupon');
 
-            $coupon = Coupon::where('code', $code)->first();
+        $coupon = Coupon::where('code', $code)->first();
 
-            session()->put('coupon', [
+        if ($coupon) {
+            request()->session()->put('coupon', [
                 'code' => $coupon->code,
                 'remise' => $coupon->discount(Cart::subtotal())
             ]);
         }
+
     }
 }

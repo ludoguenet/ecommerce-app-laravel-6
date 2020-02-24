@@ -39,6 +39,6 @@ class User extends \TCG\Voyager\Models\User
 
     public function orders()
     {
-        return $this->hasMany('App\Order');
+        return $this->hasMany('App\Order')->orderBy('orders.created_at', 'DESC');
     }
 }
