@@ -118,10 +118,10 @@
                             {{ getPrice(Cart::subtotal() - session()->get('coupon')['remise']) }}
                         </strong>
                         </li>
-                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Taxe</strong><strong>{{ getPrice((Cart::subtotal() - session()->get('coupon')['remise']) * 0.20) }}</strong></li>
+                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Taxe</strong><strong>{{ getPrice((Cart::subtotal() - session()->get('coupon')['remise']) * (config('cart.tax') / 100)) }}</strong></li>
                         <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong>
                         <h5 class="font-weight-bold">
-                            {{ getPrice((Cart::subtotal() - session()->get('coupon')['remise']) + ((Cart::subtotal() - session()->get('coupon')['remise']) * 0.20 ))}}
+                            {{ getPrice((Cart::subtotal() - session()->get('coupon')['remise']) + ((Cart::subtotal() - session()->get('coupon')['remise']) * (config('cart.tax') / 100)))  }}
                         </h5>
                         </li>
                         @else
