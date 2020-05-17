@@ -129,7 +129,7 @@
                         "X-Requested-With": "XMLHttpRequest",
                         "X-CSRF-TOKEN": token
                     },
-                    method: 'patch',
+                    method: 'PATCH',
                     body: JSON.stringify({
                         qty: this.value
                     })
